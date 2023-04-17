@@ -2,7 +2,7 @@
 """
 Created on Wed Feb 17 16:19:35 2021
 
-@author: HB
+@author: Henrik Bradtmüller - mail@bradtmueller.net - https://hbrmn.github.io/
 
 todo: make outputstring stating the nucleus-nucleus interactions
 -make it auto detect delimiters
@@ -35,6 +35,8 @@ class DataSet():
         self.gamma2 = self.isotopes['gamma'][self.ind2] * 1e7
         self.quant_number = self.isotopes['spin'][self.ind2]
         self.abundance = self.isotopes['abundance'][self.ind2]/100
+        print(self.gamma1)
+        print(cnst.hbar)
 
     def find_isotope_index(self, nuc):
         try:
@@ -60,6 +62,7 @@ class DataSet():
         inv_sp_dist = ((np.array(self.data[x][:,3].astype(np.float))
                           * 1e-10)**6 )**-1
         multiplicity = np.array(self.data[x][:,2].astype(np.float))
+        print(np.sum(inv_sp_dist*multiplicity))
         return np.sum(inv_sp_dist*multiplicity)
 
     def m2het(self, dist_sum):
@@ -68,7 +71,7 @@ class DataSet():
         return (self.abundance * (4/15) * (vac_perm / (4 * cnst.pi))**2 *
                 self.quant_number * (self.quant_number + 1)*
                 self.gamma1**2 * self.gamma2**2 * cnst.hbar**2 * dist_sum)
-    
+
     def m2hom(self, dist_sum):
         """Calculates homonuclear second moment from given distance sum"""
         vac_perm = cnst.physical_constants['vacuum mag. permeability'][0]
@@ -86,6 +89,6 @@ class DataSet():
         return result
 
 ##########################################################
-a = DataSet(r'C:\Users\HB\data_work\Projects\Anuraag\Al2Si2H4O9_mp-541152_conventional_standard.csv', '7Li', '7Li')
+a = DataSet(r'C:\Users\edwu5ea1\data_work\XRD Data\ScF3\ScF3.csv', '45Sc', '19F')
 m2 = a.second_moment()
-# const_d = np.mean(m2)/(2*np.pi)
+const_d = np.mean(m2)/(2*np.pi)
