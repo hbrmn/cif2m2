@@ -35,8 +35,8 @@ class DataSet():
         self.gamma2 = self.isotopes['gamma'][self.ind2] * 1e7
         self.quant_number = self.isotopes['spin'][self.ind2]
         self.abundance = self.isotopes['abundance'][self.ind2]/100
-        print(self.gamma1)
-        print(cnst.hbar)
+        # print(self.gamma1)
+        # print(cnst.hbar)
 
     def find_isotope_index(self, nuc):
         try:
@@ -59,10 +59,10 @@ class DataSet():
     def dist_sum(self, x):
         """Calculates the sum of inverse sixth power distances, multiplied
         by their corresponding multiplicities"""
-        inv_sp_dist = ((np.array(self.data[x][:,3].astype(np.float))
+        inv_sp_dist = ((np.array(self.data[x][:,3].astype(float))
                           * 1e-10)**6 )**-1
-        multiplicity = np.array(self.data[x][:,2].astype(np.float))
-        print(np.sum(inv_sp_dist*multiplicity))
+        multiplicity = np.array(self.data[x][:,2].astype(float))
+        # print(np.sum(inv_sp_dist*multiplicity))
         return np.sum(inv_sp_dist*multiplicity)
 
     def m2het(self, dist_sum):
@@ -78,6 +78,7 @@ class DataSet():
         return (self.abundance * 0.9562 * (vac_perm / (4 * cnst.pi))**2 *
                 self.gamma1**2 * self.gamma2**2 * cnst.hbar**2 * dist_sum)
 
+
     def second_moment(self):
         """Calculates second moments for all "observe nuclei x" in dataset """
         if self.gamma1 == self.gamma2:
@@ -89,6 +90,12 @@ class DataSet():
         return result
 
 ##########################################################
-a = DataSet(r'C:\Users\edwu5ea1\data_work\XRD Data\ScF3\ScF3.csv', '45Sc', '19F')
+# a = DataSet(r'C:\Users\edwu5ea1\data_work\XRD Data\Na5P3O10\Na5P3O10-P-P-Q1.csv', '31P', '31P')
+a = DataSet(r'C:\Users\edwu5ea1\data_work\XRD Data\K2Nb2O14Si4\2101586-1.csv', '29Si', '93Nb')
 m2 = a.second_moment()
-const_d = np.mean(m2)/(2*np.pi)
+# m2 = np.array(a.second_moment())/0.9562 # division for drenar bjk
+# m2_drenar = m2[0]*1e6 /(4 * np.pi**2)
+# m2_drenar2 = m2[1]*1e6 /(4 * np.pi**2)
+# bjk_drenar = np.sqrt(m2_drenar)
+# bjk_drenar2 = np.sqrt(m2_drenar2)
+
